@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Hls from 'hls.js';
-import { X } from 'lucide-react';
+import { Power } from 'lucide-react';
 
 const Player = ({ streamUrl, onBack }) => {
     const videoRef = useRef(null);
@@ -99,18 +99,21 @@ const Player = ({ streamUrl, onBack }) => {
             <button
                 style={{
                     ...styles.backButton,
-                    width: 'auto',
-                    padding: '5px 10px',
                     opacity: showControls ? 1 : 0,
                     pointerEvents: showControls ? 'auto' : 'none',
                     transition: 'opacity 0.5s ease',
+                    background: 'rgba(255, 59, 48, 0.4)',
+                    borderColor: 'var(--neon-magenta)',
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '14px',
                 }}
                 onClick={onBack}
                 className="focusable"
                 autoFocus // Give focus to back button when player opens
+                title="Exit Playing Video"
             >
-                <X size={14} color="white" style={{ marginRight: '6px' }} />
-                <span style={{ color: 'white', fontWeight: 'bold', fontSize: '10px' }}>Exit</span>
+                <Power size={24} color="white" />
             </button>
 
             {isYouTube ? (

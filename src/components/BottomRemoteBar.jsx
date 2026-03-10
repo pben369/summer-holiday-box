@@ -1,14 +1,9 @@
 import React from 'react';
-import { Power, Play, Pause, FastForward, Rewind, Volume2 } from 'lucide-react';
+import { Play, Pause, FastForward, Rewind, Volume2 } from 'lucide-react';
 
 const BottomRemoteBar = () => {
     return (
         <div style={styles.remoteBar} className="glass-panel">
-            {/* Power Button */}
-            <button className="focusable" style={{ ...styles.remoteButton, ...styles.powerButton }}>
-                <Power size={20} color="white" />
-            </button>
-
             {/* Media Controls */}
             <div style={styles.controlGroup}>
                 <button className="focusable" style={styles.remoteButton}><Rewind size={20} /></button>
@@ -59,10 +54,6 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         color: 'var(--text-secondary)',
-    },
-    powerButton: {
-        background: 'rgba(255, 59, 48, 0.2)',
-        borderColor: 'var(--neon-magenta)',
     },
     controlGroup: {
         display: 'flex',
