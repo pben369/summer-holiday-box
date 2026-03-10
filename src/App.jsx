@@ -111,6 +111,27 @@ function App() {
           logo: 'jungle-book-logo.png',
           category: 'YouTube',
           url: 'https://www.youtube.com/embed/videoseries?list=PL7kd5bTo_Q1rKEFR6z3O0DPExOF8vKhyU&autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-heman',
+          name: 'He-Man Master of Universe',
+          logo: 'he-man-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/videoseries?list=PLkiXH7NXzBmF_XbuEz7TmYLMYhKuJ3TVe&autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-malgudi',
+          name: 'Malgudi Days',
+          logo: 'malgudi-days-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/videoseries?list=PLLV9m6UjApHdi4Vv9uJha-2qEilY_-Sub&autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-gravityfalls',
+          name: 'Gravity Falls',
+          logo: 'gravity-falls-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/eE1L08hNdW8?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
         }
       ];
 
