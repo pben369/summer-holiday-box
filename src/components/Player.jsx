@@ -5,6 +5,23 @@ import { X } from 'lucide-react';
 const Player = ({ streamUrl, onBack }) => {
     const videoRef = useRef(null);
     const [isBuffering, setIsBuffering] = useState(true);
+    const [showControls, setShowControls] = useState(true);
+    const timerRef = useRef(null);
+
+    const resetTimer = () => {
+        if (timerRef.current) clearTimeout(timerRef.current);
+        setShowControls(true);
+        timerRef.current = setTimeout(() => {
+            setShowControls(false);
+        }, 3000); // Hide after 3 seconds
+    };
+
+    useEffect(() => {
+        resetTimer();
+        return () => {
+            if (timerRef.current) clearTimeout(timerRef.current);
+        };
+    }, []);
 
     useEffect(() => {
         let hls;
@@ -88,9 +105,20 @@ const Player = ({ streamUrl, onBack }) => {
     const isYouTube = streamUrl?.includes('youtube.com/embed');
 
     return (
-        <div style={styles.playerWrapper}>
+        <div
+            style={styles.playerWrapper}
+            onMouseMove={resetTimer}
+            onTouchStart={resetTimer}
+        >
             <button
-                style={{ ...styles.backButton, width: 'auto', padding: '5px 10px' }}
+                style={{
+                    ...styles.backButton,
+                    width: 'auto',
+                    padding: '5px 10px',
+                    opacity: showControls ? 1 : 0,
+                    pointerEvents: showControls ? 'auto' : 'none',
+                    transition: 'opacity 0.5s ease',
+                }}
                 onClick={onBack}
                 className="focusable"
                 autoFocus // Give focus to back button when player opens
