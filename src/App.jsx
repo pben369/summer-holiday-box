@@ -115,7 +115,7 @@ function App() {
         {
           id: 'yt-heman',
           name: 'He-Man Master of Universe',
-          logo: 'he-man-logo.png',
+          logo: 'hee-man-logo.png',
           category: 'YouTube',
           url: 'https://www.youtube.com/embed/videoseries?list=PLkiXH7NXzBmF_XbuEz7TmYLMYhKuJ3TVe&autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
         },
