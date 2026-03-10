@@ -132,6 +132,34 @@ function App() {
           logo: 'gravity-falls-logo.png',
           category: 'YouTube',
           url: 'https://www.youtube.com/embed/eE1L08hNdW8?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-gooftroop',
+          name: 'Goof Troop',
+          logo: 'goof-troop-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/1mLPTfLwm-M?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-tomjerry',
+          name: 'Tom and Jerry',
+          logo: 'tom-and-jerry-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/400k2SKoeh4?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-avengers-assemble',
+          name: "Marvel's Avengers Assemble",
+          logo: 'avengers-assemble-vid-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/13GZtHqYrLY?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-winnie-pooh-adv',
+          name: 'The New Adventures of Winnie the Pooh',
+          logo: 'winnie-pooh-adv-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/URXBh2PRp0o?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
         }
       ];
 
