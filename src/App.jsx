@@ -14,7 +14,15 @@ const ChannelGrid = ({ channels, onSelectChannel, searchQuery, favorites, toggle
     const matchesSearch = channel.name.toLowerCase().includes(searchQuery.toLowerCase());
     const isFav = favorites.includes(channel.id);
     const matchesFavorite = showFavoritesOnly ? isFav : true;
-    return matchesSearch && matchesFavorite;
+
+    let matchesType = true;
+    if (contentType === 'live') {
+      matchesType = channel.category !== 'YouTube';
+    } else if (contentType === 'series') {
+      matchesType = channel.category === 'YouTube';
+    }
+
+    return matchesSearch && matchesFavorite && matchesType;
   });
 
   return (
@@ -81,6 +89,7 @@ function App() {
   });
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
+  const [contentType, setContentType] = useState('all'); // 'all', 'live', 'series'
 
   useEffect(() => {
     localStorage.setItem('praveen_tv_favorites', JSON.stringify(favorites));
@@ -247,6 +256,13 @@ function App() {
     loadChannels();
   }, []);
 
+  const handleSurprise = () => {
+    if (channels.length > 0) {
+      const randomIndex = Math.floor(Math.random() * channels.length);
+      setSelectedChannel(channels[randomIndex]);
+    }
+  };
+
   return (
     <>
       {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
@@ -273,6 +289,7 @@ function App() {
                 searchQuery={searchQuery}
                 favorites={favorites}
                 showFavoritesOnly={showFavoritesOnly}
+                contentType={contentType}
                 onSelectChannel={(ch) => setSelectedChannel(ch)}
                 toggleFavorite={(id) => {
                   setFavorites(prev =>
@@ -283,7 +300,13 @@ function App() {
             )}
           </div>
 
-          <BottomRemoteBar />
+          <BottomRemoteBar
+            onExit={() => setSelectedChannel(null)}
+            isPlayerOpen={!!selectedChannel}
+            contentType={contentType}
+            setContentType={setContentType}
+            onSurprise={handleSurprise}
+          />
         </div>
       </div>
     </>
