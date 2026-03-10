@@ -5,23 +5,7 @@ import { X } from 'lucide-react';
 const Player = ({ streamUrl, onBack }) => {
     const videoRef = useRef(null);
     const [isBuffering, setIsBuffering] = useState(true);
-    const [showControls, setShowControls] = useState(true);
-    const timerRef = useRef(null);
-
-    const resetTimer = () => {
-        if (timerRef.current) clearTimeout(timerRef.current);
-        setShowControls(true);
-        timerRef.current = setTimeout(() => {
-            setShowControls(false);
-        }, 3000); // Hide after 3 seconds
-    };
-
-    useEffect(() => {
-        resetTimer();
-        return () => {
-            if (timerRef.current) clearTimeout(timerRef.current);
-        };
-    }, []);
+    const [showControls, setShowControls] = useState(false);
 
     useEffect(() => {
         let hls;
@@ -107,8 +91,10 @@ const Player = ({ streamUrl, onBack }) => {
     return (
         <div
             style={styles.playerWrapper}
-            onMouseMove={resetTimer}
-            onTouchStart={resetTimer}
+            onMouseEnter={() => setShowControls(true)}
+            onMouseLeave={() => setShowControls(false)}
+            onMouseMove={() => setShowControls(true)}
+            onTouchStart={() => setShowControls(true)}
         >
             <button
                 style={{
