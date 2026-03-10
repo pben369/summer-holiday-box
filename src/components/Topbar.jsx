@@ -1,7 +1,7 @@
 import React from 'react';
 import { Search, Mail } from 'lucide-react';
 
-const Topbar = () => {
+const Topbar = ({ searchQuery, setSearchQuery }) => {
     return (
         <div style={styles.topbar}>
             <h1 style={styles.title}>KIDS TV</h1>
@@ -14,6 +14,8 @@ const Topbar = () => {
                         style={styles.searchInput}
                         title="Search"
                         className="focusable"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                     />
                     <Search size={20} color="var(--text-secondary)" />
                 </div>

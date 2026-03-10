@@ -8,12 +8,18 @@ import useSpatialNavigation from './hooks/useSpatialNavigation';
 import { Play } from 'lucide-react';
 
 // A simpler component to show parsed channels
-const ChannelGrid = ({ channels, onSelectChannel }) => {
+const ChannelGrid = ({ channels, onSelectChannel, searchQuery }) => {
+  const filteredChannels = channels.filter(channel =>
+    channel.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div style={{ padding: '0 20px', paddingBottom: '40px' }}>
-      <h2 style={styles.categoryTitle}>All Channels</h2>
+      <h2 style={styles.categoryTitle}>
+        {searchQuery ? `Search Results: ${searchQuery}` : 'All Channels'}
+      </h2>
       <div style={styles.grid}>
-        {channels.map((channel, idx) => (
+        {filteredChannels.map((channel, idx) => (
           <button
             key={idx}
             className="glow-card focusable"
@@ -42,6 +48,7 @@ function App() {
   const [channels, setChannels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedChannel, setSelectedChannel] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     // Fetch and parse the IPTV playlist
@@ -207,7 +214,7 @@ function App() {
   return (
     <div className="app-container">
       <div className="main-content">
-        <Topbar />
+        <Topbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
         <div className="content-area">
           {loading ? (
@@ -220,6 +227,7 @@ function App() {
           ) : (
             <ChannelGrid
               channels={channels}
+              searchQuery={searchQuery}
               onSelectChannel={(ch) => setSelectedChannel(ch)}
             />
           )}
