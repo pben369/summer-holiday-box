@@ -160,6 +160,13 @@ function App() {
           logo: 'winnie-pooh-adv-logo.png',
           category: 'YouTube',
           url: 'https://www.youtube.com/embed/URXBh2PRp0o?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-regularshow',
+          name: 'Regular Show',
+          logo: 'regular-show-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/aPGvK6tJMXk?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
         }
       ];
 
