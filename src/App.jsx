@@ -104,6 +104,13 @@ function App() {
           logo: 'bandbudh-logo.png',
           category: 'YouTube',
           url: 'https://www.youtube.com/embed/videoseries?list=PL-4vjtQdv9wMY8NiZIN28O3xE8XDS3iyh&autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-junglebook',
+          name: 'The Jungle Book Hindi',
+          logo: 'jungle-book-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/videoseries?list=PL7kd5bTo_Q1rKEFR6z3O0DPExOF8vKhyU&autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
         }
       ];
 
