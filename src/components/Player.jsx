@@ -174,13 +174,14 @@ const styles = {
         transform: 'translateY(-50%)',
         zIndex: 101,
         background: 'rgba(0,0,0,0.5)',
-        border: '1px solid rgba(255,255,255,0.2)',
+        border: '1px solid rgba(0, 225, 255, 0.5)',
         borderRadius: '8px',
         cursor: 'pointer',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        backdropFilter: 'blur(5px)'
+        backdropFilter: 'blur(5px)',
+        boxShadow: '0 0 15px rgba(0, 225, 255, 0.4)'
     },
     loading: {
         color: 'white'
