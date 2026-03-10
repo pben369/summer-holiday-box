@@ -10,8 +10,8 @@ const Topbar = ({ searchQuery, setSearchQuery, showFavoritesOnly, setShowFavorit
                 <button
                     style={{
                         ...styles.iconButton,
-                        background: showFavoritesOnly ? 'rgba(0, 225, 255, 0.2)' : 'rgba(255, 255, 255, 0.05)',
-                        borderColor: showFavoritesOnly ? 'var(--neon-blue)' : 'rgba(255, 255, 255, 0.1)'
+                        background: showFavoritesOnly ? 'rgba(255, 215, 0, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                        borderColor: showFavoritesOnly ? '#FFD700' : 'rgba(255, 255, 255, 0.1)'
                     }}
                     onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
                     className="focusable"
@@ -19,8 +19,8 @@ const Topbar = ({ searchQuery, setSearchQuery, showFavoritesOnly, setShowFavorit
                 >
                     <Star
                         size={24}
-                        fill={showFavoritesOnly ? "var(--neon-blue)" : "none"}
-                        color={showFavoritesOnly ? "var(--neon-blue)" : "white"}
+                        fill={showFavoritesOnly ? "#FFD700" : "none"}
+                        color={showFavoritesOnly ? "#FFD700" : "white"}
                     />
                 </button>
 

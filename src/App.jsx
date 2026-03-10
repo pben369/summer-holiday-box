@@ -49,8 +49,8 @@ const ChannelGrid = ({ channels, onSelectChannel, searchQuery, favorites, toggle
             >
               <Star
                 size={20}
-                fill={favorites.includes(channel.id) ? "var(--neon-blue)" : "none"}
-                color={favorites.includes(channel.id) ? "var(--neon-blue)" : "white"}
+                fill={favorites.includes(channel.id) ? "#FFD700" : "none"}
+                color={favorites.includes(channel.id) ? "#FFD700" : "white"}
               />
             </button>
           </div>
