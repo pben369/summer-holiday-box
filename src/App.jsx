@@ -167,6 +167,34 @@ function App() {
           logo: 'regular-show-logo.png',
           category: 'YouTube',
           url: 'https://www.youtube.com/embed/aPGvK6tJMXk?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-bigcitygreens',
+          name: 'Big City Greens',
+          logo: 'big-city-greens-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/B_5RPAixkG4?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-avatar',
+          name: 'Avatar Air bender',
+          logo: 'avatar-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/RQKennJryJo?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-ducktales',
+          name: 'Duck tales 1987',
+          logo: 'duck-tales-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/XD50huu0M24?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-tangled',
+          name: 'Tangled Adventure',
+          logo: 'tangled-logo.png',
+          category: 'YouTube',
+          url: 'https://www.youtube.com/embed/kuIgnSxGirw?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
         }
       ];
 
