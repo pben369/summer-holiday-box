@@ -16,6 +16,15 @@ const SplashScreen = ({ onComplete }) => {
 
     return (
         <div className={`splash-container ${fadeOut ? 'fade-out' : ''}`} style={{ opacity: fadeOut ? 0 : 1 }}>
+            <div className="splash-background" style={{
+                backgroundImage: 'url(./summer-splash.jpg)',
+                position: 'absolute',
+                top: 0, left: 0, right: 0, bottom: 0,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                opacity: 0.4, // Subdued background to keep text readable
+                zIndex: -1
+            }}></div>
             <div className="splash-logo-container">
                 <h1 className="splash-title">SUMMER BOX</h1>
                 <p className="splash-subtitle">Magic Holiday Fun</p>
