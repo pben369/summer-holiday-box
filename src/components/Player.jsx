@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Hls from 'hls.js';
+import { X } from 'lucide-react';
 
 const Player = ({ streamUrl, onBack }) => {
     const videoRef = useRef(null);
     const [isBuffering, setIsBuffering] = useState(true);
+    const [showControls, setShowControls] = useState(false);
 
     useEffect(() => {
         let hls;
@@ -84,8 +86,33 @@ const Player = ({ streamUrl, onBack }) => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [onBack]);
 
+    const isYouTube = streamUrl?.includes('youtube.com/embed');
+
     return (
-        <div style={styles.playerWrapper}>
+        <div
+            style={styles.playerWrapper}
+            onMouseEnter={() => setShowControls(true)}
+            onMouseLeave={() => setShowControls(false)}
+            onMouseMove={() => setShowControls(true)}
+            onTouchStart={() => setShowControls(true)}
+        >
+            <button
+                style={{
+                    ...styles.backButton,
+                    width: 'auto',
+                    padding: '5px 10px',
+                    opacity: showControls ? 1 : 0,
+                    pointerEvents: showControls ? 'auto' : 'none',
+                    transition: 'opacity 0.5s ease',
+                }}
+                onClick={onBack}
+                className="focusable"
+                autoFocus // Give focus to back button when player opens
+            >
+                <X size={14} color="white" style={{ marginRight: '6px' }} />
+                <span style={{ color: 'white', fontWeight: 'bold', fontSize: '10px' }}>Exit</span>
+            </button>
+
             {isYouTube ? (
                 <iframe
                     width="100%"

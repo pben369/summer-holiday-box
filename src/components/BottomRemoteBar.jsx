@@ -1,30 +1,20 @@
 import React from 'react';
 import { Power, Play, Pause, FastForward, Rewind, Volume2 } from 'lucide-react';
 
-const BottomRemoteBar = ({ onExit, isPlayerOpen, contentType, setContentType, onSurprise }) => {
+const BottomRemoteBar = () => {
     return (
         <div style={styles.remoteBar} className="glass-panel">
-            {/* Power Button - Exits video playback */}
-            <button
-                className="glow-card focusable"
-                style={{
-                    ...styles.remoteButton,
-                    ...styles.powerButton,
-                    opacity: isPlayerOpen ? 1 : 0.5,
-                    border: isPlayerOpen ? '2px solid var(--neon-magenta)' : '1px solid rgba(255, 255, 255, 0.1)'
-                }}
-                onClick={onExit}
-                title="Exit Playing Video"
-            >
-                <Power size={20} color={isPlayerOpen ? "var(--neon-magenta)" : "white"} />
+            {/* Power Button */}
+            <button className="focusable" style={{ ...styles.remoteButton, ...styles.powerButton }}>
+                <Power size={20} color="white" />
             </button>
 
             {/* Media Controls */}
             <div style={styles.controlGroup}>
-                <button className="glow-card focusable" style={styles.remoteButton} title="Rewind"><Rewind size={20} /></button>
-                <button className="glow-card focusable" style={styles.remoteButton} title="Play"><Play size={20} /></button>
-                <button className="glow-card focusable" style={styles.remoteButton} title="Pause"><Pause size={20} /></button>
-                <button className="glow-card focusable" style={styles.remoteButton} title="Fast Forward"><FastForward size={20} /></button>
+                <button className="focusable" style={styles.remoteButton}><Rewind size={20} /></button>
+                <button className="focusable" style={styles.remoteButton}><Play size={20} /></button>
+                <button className="focusable" style={styles.remoteButton}><Pause size={20} /></button>
+                <button className="focusable" style={styles.remoteButton}><FastForward size={20} /></button>
             </div>
 
             {/* Volume Control */}
@@ -37,48 +27,10 @@ const BottomRemoteBar = ({ onExit, isPlayerOpen, contentType, setContentType, on
 
             {/* Color Keys */}
             <div style={styles.colorGroup}>
-                <button
-                    className="glow-card focusable"
-                    style={{
-                        ...styles.colorButton,
-                        background: '#FF3B30',
-                        border: contentType === 'live' ? '2px solid white' : 'none',
-                        boxShadow: contentType === 'live' ? '0 0 15px #FF3B30' : 'none'
-                    }}
-                    onClick={() => setContentType('live')}
-                    title="Live Channels (Red)"
-                ></button>
-                <button
-                    className="glow-card focusable"
-                    style={{
-                        ...styles.colorButton,
-                        background: '#34C759',
-                        border: contentType === 'series' ? '2px solid white' : 'none',
-                        boxShadow: contentType === 'series' ? '0 0 15px #34C759' : 'none'
-                    }}
-                    onClick={() => setContentType('series')}
-                    title="YouTube Series (Green)"
-                ></button>
-                <button
-                    className="glow-card focusable"
-                    style={{
-                        ...styles.colorButton,
-                        background: '#FFCC00',
-                        border: contentType === 'all' ? '2px solid white' : 'none',
-                        boxShadow: contentType === 'all' ? '0 0 15px #FFCC00' : 'none'
-                    }}
-                    onClick={() => setContentType('all')}
-                    title="All Content (Yellow)"
-                ></button>
-                <button
-                    className="glow-card focusable"
-                    style={{
-                        ...styles.colorButton,
-                        background: '#007AFF'
-                    }}
-                    onClick={onSurprise}
-                    title="Surprise Me! (Blue)"
-                ></button>
+                <button className="focusable" style={{ ...styles.colorButton, background: '#FF3B30' }}></button>
+                <button className="focusable" style={{ ...styles.colorButton, background: '#34C759' }}></button>
+                <button className="focusable" style={{ ...styles.colorButton, background: '#FFCC00' }}></button>
+                <button className="focusable" style={{ ...styles.colorButton, background: '#007AFF' }}></button>
             </div>
         </div>
     );
