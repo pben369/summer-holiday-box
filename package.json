@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "framer-motion": "^12.35.2",
     "hls.js": "^1.6.15",
     "lucide-react": "^0.577.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "react-parallax-tilt": "^1.7.320"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

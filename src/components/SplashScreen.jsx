@@ -26,7 +26,7 @@ const SplashScreen = ({ onComplete }) => {
                 zIndex: -1
             }}></div>
             <div className="splash-logo-container">
-                <h1 className="splash-title">SUMMER BOX</h1>
+                <h1 className="splash-title">SUMMER HOLIDAY BOX</h1>
                 <p className="splash-subtitle">Magic Holiday Fun</p>
                 <div className="splash-loader"></div>
             </div>

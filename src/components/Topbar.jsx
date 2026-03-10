@@ -1,10 +1,53 @@
 import React from 'react';
 import { Search, Star } from 'lucide-react';
 
-const Topbar = ({ searchQuery, setSearchQuery, showFavoritesOnly, setShowFavoritesOnly }) => {
+const Topbar = ({ searchQuery, setSearchQuery, showFavoritesOnly, setShowFavoritesOnly, contentType, setContentType }) => {
     return (
         <div style={styles.topbar}>
-            <h1 style={styles.title}>KIDS TV</h1>
+            <div style={styles.colorGroup}>
+                <button
+                    className="glow-card focusable glow-red"
+                    style={{
+                        ...styles.colorButton,
+                        background: '#FF3B30',
+                        border: contentType === 'live' ? '2px solid white' : 'none',
+                        boxShadow: contentType === 'live' ? '0 0 15px #FF3B30' : 'none'
+                    }}
+                    onClick={() => setContentType('live')}
+                    title="Live (Red)"
+                >
+                    Live
+                </button>
+                <button
+                    className="glow-card focusable glow-green"
+                    style={{
+                        ...styles.colorButton,
+                        background: '#34C759',
+                        border: contentType === 'series' ? '2px solid white' : 'none',
+                        boxShadow: contentType === 'series' ? '0 0 15px #34C759' : 'none'
+                    }}
+                    onClick={() => setContentType('series')}
+                    title="Series (Green)"
+                >
+                    Series
+                </button>
+                <button
+                    className="glow-card focusable glow-yellow"
+                    style={{
+                        ...styles.colorButton,
+                        background: '#FFCC00',
+                        color: 'black',
+                        border: contentType === 'all' ? '2px solid white' : 'none',
+                        boxShadow: contentType === 'all' ? '0 0 15px #FFCC00' : 'none'
+                    }}
+                    onClick={() => setContentType('all')}
+                    title="Show All (Yellow)"
+                >
+                    Show All
+                </button>
+            </div>
+
+            <h1 style={styles.title} className="rainbow-glow">Summer Holiday Box</h1>
 
             <div style={styles.actions}>
                 <button
@@ -46,15 +89,37 @@ const styles = {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '0 20px 20px 20px',
+        padding: '0 20px 10px 20px',
+        position: 'relative',
+    },
+    colorGroup: {
+        display: 'flex',
+        gap: '10px',
+        zIndex: 2,
+    },
+    colorButton: {
+        padding: '6px 12px',
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: '13px',
+        border: 'none',
+        borderRadius: '8px',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.5)',
+        cursor: 'pointer',
+        fontFamily: '"Bubblegum Sans", system-ui, sans-serif',
     },
     title: {
-        fontSize: '32px',
-        fontWeight: '800',
-        color: 'var(--neon-blue)',
-        textShadow: '0 0 10px rgba(0, 225, 255, 0.5)',
-        letterSpacing: '2px',
+        position: 'absolute',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 1,
+        fontSize: '36px',
+        fontWeight: '900',
+        color: 'white',
+        letterSpacing: '1.5px',
         margin: 0,
+        fontFamily: '"Bubblegum Sans", system-ui, sans-serif',
+        textTransform: 'uppercase',
     },
     actions: {
         display: 'flex',

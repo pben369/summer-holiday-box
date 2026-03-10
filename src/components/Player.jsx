@@ -104,16 +104,17 @@ const Player = ({ streamUrl, onBack }) => {
                     transition: 'opacity 0.5s ease',
                     background: 'rgba(255, 59, 48, 0.4)',
                     borderColor: 'var(--neon-magenta)',
-                    width: '50px',
-                    height: '50px',
-                    borderRadius: '14px',
+                    width: '25px',
+                    height: '25px',
+                    borderRadius: '7px',
+                    boxShadow: '0 0 15px rgba(255, 59, 48, 0.8)'
                 }}
                 onClick={onBack}
                 className="focusable"
                 autoFocus // Give focus to back button when player opens
                 title="Exit Playing Video"
             >
-                <Power size={24} color="white" />
+                <Power size={14} color="white" />
             </button>
 
             {isYouTube ? (
@@ -173,7 +174,7 @@ const styles = {
     backButton: {
         position: 'absolute',
         top: '50%',
-        left: '20px',
+        right: '20px',
         transform: 'translateY(-50%)',
         zIndex: 101,
         background: 'rgba(0,0,0,0.5)',
