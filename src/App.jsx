@@ -3,6 +3,7 @@ import './App.css';
 import Topbar from './components/Topbar';
 import BottomRemoteBar from './components/BottomRemoteBar';
 import Player from './components/Player';
+import SplashScreen from './components/SplashScreen';
 import { parseM3U } from './utils/m3uParser';
 import useSpatialNavigation from './hooks/useSpatialNavigation';
 import { Play, Star } from 'lucide-react';
@@ -79,6 +80,7 @@ function App() {
     return saved ? JSON.parse(saved) : [];
   });
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     localStorage.setItem('praveen_tv_favorites', JSON.stringify(favorites));
@@ -246,42 +248,45 @@ function App() {
   }, []);
 
   return (
-    <div className="app-container">
-      <div className="main-content">
-        <Topbar
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          showFavoritesOnly={showFavoritesOnly}
-          setShowFavoritesOnly={setShowFavoritesOnly}
-        />
+    <>
+      {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
+      <div className="app-container">
+        <div className="main-content">
+          <Topbar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            showFavoritesOnly={showFavoritesOnly}
+            setShowFavoritesOnly={setShowFavoritesOnly}
+          />
 
-        <div className="content-area">
-          {loading ? (
-            <div className="loading-overlay" style={{ background: 'transparent' }}>
-              <div className="spinner"></div>
-              <div className="loading-text">Loading Channels...</div>
-            </div>
-          ) : selectedChannel ? (
-            <Player streamUrl={selectedChannel.url} onBack={() => setSelectedChannel(null)} />
-          ) : (
-            <ChannelGrid
-              channels={channels}
-              searchQuery={searchQuery}
-              favorites={favorites}
-              showFavoritesOnly={showFavoritesOnly}
-              onSelectChannel={(ch) => setSelectedChannel(ch)}
-              toggleFavorite={(id) => {
-                setFavorites(prev =>
-                  prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]
-                );
-              }}
-            />
-          )}
+          <div className="content-area">
+            {loading ? (
+              <div className="loading-overlay" style={{ background: 'transparent' }}>
+                <div className="spinner"></div>
+                <div className="loading-text">Loading Channels...</div>
+              </div>
+            ) : selectedChannel ? (
+              <Player streamUrl={selectedChannel.url} onBack={() => setSelectedChannel(null)} />
+            ) : (
+              <ChannelGrid
+                channels={channels}
+                searchQuery={searchQuery}
+                favorites={favorites}
+                showFavoritesOnly={showFavoritesOnly}
+                onSelectChannel={(ch) => setSelectedChannel(ch)}
+                toggleFavorite={(id) => {
+                  setFavorites(prev =>
+                    prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]
+                  );
+                }}
+              />
+            )}
+          </div>
+
+          <BottomRemoteBar />
         </div>
-
-        <BottomRemoteBar />
       </div>
-    </div>
+    </>
   );
 }
 
