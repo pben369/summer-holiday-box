@@ -5,38 +5,63 @@ import BottomRemoteBar from './components/BottomRemoteBar';
 import Player from './components/Player';
 import { parseM3U } from './utils/m3uParser';
 import useSpatialNavigation from './hooks/useSpatialNavigation';
-import { Play } from 'lucide-react';
+import { Play, Star } from 'lucide-react';
 
 // A simpler component to show parsed channels
-const ChannelGrid = ({ channels, onSelectChannel, searchQuery }) => {
-  const filteredChannels = channels.filter(channel =>
-    channel.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+const ChannelGrid = ({ channels, onSelectChannel, searchQuery, favorites, toggleFavorite, showFavoritesOnly }) => {
+  const filteredChannels = channels.filter(channel => {
+    const matchesSearch = channel.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const isFav = favorites.includes(channel.id);
+    const matchesFavorite = showFavoritesOnly ? isFav : true;
+    return matchesSearch && matchesFavorite;
+  });
 
   return (
     <div style={{ padding: '0 20px', paddingBottom: '40px' }}>
       <h2 style={styles.categoryTitle}>
-        {searchQuery ? `Search Results: ${searchQuery}` : 'All Channels'}
+        {showFavoritesOnly ? 'My Favorites' : (searchQuery ? `Search Results: ${searchQuery}` : 'All Channels')}
       </h2>
       <div style={styles.grid}>
         {filteredChannels.map((channel, idx) => (
-          <button
-            key={idx}
-            className="glow-card focusable"
-            style={styles.channelCard}
-            onClick={() => onSelectChannel(channel)}
-          >
-            {channel.logo ? (
-              <img src={channel.logo} alt={channel.name} style={styles.channelLogo} />
-            ) : (
-              <div style={styles.placeholderLogo}><Play size={40} color="white" /></div>
-            )}
-            <div style={styles.channelNameOverlay}>
-              <span style={styles.channelName}>{channel.name}</span>
-            </div>
-          </button>
+          <div key={idx} style={{ position: 'relative' }}>
+            <button
+              className="glow-card focusable"
+              style={styles.channelCard}
+              onClick={() => onSelectChannel(channel)}
+            >
+              {channel.logo ? (
+                <img src={channel.logo} alt={channel.name} style={styles.channelLogo} />
+              ) : (
+                <div style={styles.placeholderLogo}><Play size={40} color="white" /></div>
+              )}
+              <div style={styles.channelNameOverlay}>
+                <span style={styles.channelName}>{channel.name}</span>
+              </div>
+            </button>
+            <button
+              style={styles.favoriteButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFavorite(channel.id);
+              }}
+              className="focusable"
+              title={favorites.includes(channel.id) ? "Remove from Favorites" : "Add to Favorites"}
+            >
+              <Star
+                size={20}
+                fill={favorites.includes(channel.id) ? "var(--neon-blue)" : "none"}
+                color={favorites.includes(channel.id) ? "var(--neon-blue)" : "white"}
+              />
+            </button>
+          </div>
         ))}
       </div>
+      {showFavoritesOnly && filteredChannels.length === 0 && (
+        <div style={{ textAlign: 'center', color: 'gray', marginTop: '100px' }}>
+          <Star size={64} style={{ marginBottom: '20px', opacity: 0.3 }} />
+          <p style={{ fontSize: '20px' }}>No favorites yet! Click the star on any show to add it here.</p>
+        </div>
+      )}
     </div>
   )
 }
@@ -49,6 +74,15 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem('praveen_tv_favorites');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('praveen_tv_favorites', JSON.stringify(favorites));
+  }, [favorites]);
 
   useEffect(() => {
     // Fetch and parse the IPTV playlist
@@ -214,7 +248,12 @@ function App() {
   return (
     <div className="app-container">
       <div className="main-content">
-        <Topbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <Topbar
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          showFavoritesOnly={showFavoritesOnly}
+          setShowFavoritesOnly={setShowFavoritesOnly}
+        />
 
         <div className="content-area">
           {loading ? (
@@ -228,7 +267,14 @@ function App() {
             <ChannelGrid
               channels={channels}
               searchQuery={searchQuery}
+              favorites={favorites}
+              showFavoritesOnly={showFavoritesOnly}
               onSelectChannel={(ch) => setSelectedChannel(ch)}
+              toggleFavorite={(id) => {
+                setFavorites(prev =>
+                  prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]
+                );
+              }}
             />
           )}
         </div>
@@ -281,6 +327,23 @@ const styles = {
     fontSize: '28px',
     color: 'var(--neon-blue)',
     marginBottom: '20px',
+  },
+  favoriteButton: {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+    zIndex: 10,
+    background: 'rgba(0,0,0,0.5)',
+    border: 'none',
+    borderRadius: '50%',
+    width: '36px',
+    height: '36px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    cursor: 'pointer',
+    backdropFilter: 'blur(5px)',
+    transition: 'all 0.2s ease'
   }
 };
 

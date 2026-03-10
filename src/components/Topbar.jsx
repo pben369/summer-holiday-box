@@ -1,12 +1,29 @@
 import React from 'react';
-import { Search, Mail } from 'lucide-react';
+import { Search, Star } from 'lucide-react';
 
-const Topbar = ({ searchQuery, setSearchQuery }) => {
+const Topbar = ({ searchQuery, setSearchQuery, showFavoritesOnly, setShowFavoritesOnly }) => {
     return (
         <div style={styles.topbar}>
             <h1 style={styles.title}>KIDS TV</h1>
 
             <div style={styles.actions}>
+                <button
+                    style={{
+                        ...styles.iconButton,
+                        background: showFavoritesOnly ? 'rgba(0, 225, 255, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                        borderColor: showFavoritesOnly ? 'var(--neon-blue)' : 'rgba(255, 255, 255, 0.1)'
+                    }}
+                    onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+                    className="focusable"
+                    title={showFavoritesOnly ? "Show All" : "Show Favorites"}
+                >
+                    <Star
+                        size={24}
+                        fill={showFavoritesOnly ? "var(--neon-blue)" : "none"}
+                        color={showFavoritesOnly ? "var(--neon-blue)" : "white"}
+                    />
+                </button>
+
                 <div style={styles.searchBar} className="glass-panel">
                     <input
                         type="text"
