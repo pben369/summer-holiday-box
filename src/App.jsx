@@ -335,6 +335,20 @@ function App() {
           logo: 'tangled-logo.png',
           category: 'YouTube Live',
           url: 'https://www.youtube.com/embed/kuIgnSxGirw?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-benholly-live',
+          name: 'Live - Ben and Holly',
+          logo: 'ben-and-holly-logo.png',
+          category: 'YouTube Live',
+          url: 'https://www.youtube.com/embed/rUi-tVzSUzM?autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+        },
+        {
+          id: 'yt-benholly-episodes',
+          name: 'Ben and Holly Episodes',
+          logo: 'ben-and-holly-logo.png',
+          category: 'YouTube Series',
+          url: 'https://www.youtube.com/embed/videoseries?list=PL6um4JyGrH5rGBeDWAyvIURc777RwP-xf&autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
         }
       ];
 
