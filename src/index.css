@@ -33,7 +33,8 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
   min-height: 100dvh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
   user-select: none;
   touch-action: manipulation;
   overscroll-behavior: none;
