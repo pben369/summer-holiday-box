@@ -32,9 +32,17 @@ body {
   background-image: var(--bg-gradient);
   color: var(--text-primary);
   min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
-  /* Prevent scrolling, TV UI should fit the screen */
   user-select: none;
+  touch-action: manipulation;
+  overscroll-behavior: none;
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+  }
 }
 
 /* Glassmorphism utility */
@@ -84,6 +92,7 @@ a:focus {
   padding: 2px;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.05));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;

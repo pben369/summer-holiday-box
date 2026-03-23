@@ -27,7 +27,7 @@ const ChannelGrid = ({ channels, onSelectChannel, searchQuery, favorites, toggle
   });
 
   let categoryText = 'All Channels';
-  let categoryColor = '#FFCC00'; // Default yellow for 'Show All'
+  let categoryColor = '#FFCC00';
 
   if (showFavoritesOnly) {
     categoryText = 'My Favorites';
@@ -43,12 +43,15 @@ const ChannelGrid = ({ channels, onSelectChannel, searchQuery, favorites, toggle
     categoryColor = '#34C759';
   }
 
+  // Detect touch device to skip hover-bg effect
+  const isTouch = window.matchMedia('(hover: none)').matches;
+
   return (
     <div style={{ padding: '0 20px', paddingBottom: '40px' }}>
-      <h2 style={{ ...styles.categoryTitle, color: categoryColor }}>
+      <h2 className="category-title" style={{ color: categoryColor }}>
         {categoryText}
       </h2>
-      <div style={styles.grid}>
+      <div className="channel-grid">
         {filteredChannels.map((channel, idx) => (
           <Tilt
             key={idx}
@@ -56,36 +59,34 @@ const ChannelGrid = ({ channels, onSelectChannel, searchQuery, favorites, toggle
             tiltMaxAngleY={15}
             scale={1.05}
             transitionSpeed={400}
-            glareEnable={true}
+            glareEnable={!isTouch}
             glareMaxOpacity={0.3}
             glareBorderRadius="16px"
             style={{ position: 'relative' }}
           >
             <button
-              className="glow-card focusable"
-              style={styles.channelCard}
+              className="glow-card focusable channel-card"
               onClick={() => onSelectChannel(channel)}
-              onMouseEnter={() => setHoveredLogo(channel.logo)}
-              onMouseLeave={() => setHoveredLogo(null)}
-              onFocus={() => setHoveredLogo(channel.logo)}
-              onBlur={() => setHoveredLogo(null)}
+              onMouseEnter={() => !isTouch && setHoveredLogo(channel.logo)}
+              onMouseLeave={() => !isTouch && setHoveredLogo(null)}
+              onFocus={() => !isTouch && setHoveredLogo(channel.logo)}
+              onBlur={() => !isTouch && setHoveredLogo(null)}
             >
               {channel.logo ? (
-                <img src={channel.logo} alt={channel.name} style={styles.channelLogo} />
+                <img src={channel.logo} alt={channel.name} style={styles.channelLogo} loading="lazy" />
               ) : (
                 <div style={styles.placeholderLogo}><Play size={40} color="white" /></div>
               )}
-              <div style={styles.channelNameOverlay}>
-                <span style={styles.channelName}>{channel.name}</span>
+              <div className="channel-name-overlay">
+                <span className="channel-name">{channel.name}</span>
               </div>
             </button>
             <button
-              style={styles.favoriteButton}
+              className="focusable fav-btn"
               onClick={(e) => {
                 e.stopPropagation();
                 toggleFavorite(channel.id);
               }}
-              className="focusable"
               title={favorites.includes(channel.id) ? "Remove from Favorites" : "Add to Favorites"}
             >
               <Star
@@ -344,24 +345,6 @@ function App() {
 }
 
 const styles = {
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-    gap: '20px',
-  },
-  channelCard: {
-    padding: 0,
-    width: '100%',
-    height: '140px',
-    background: '#1A1C29',
-    position: 'relative',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: '16px',
-    overflow: 'hidden',
-    boxSizing: 'border-box',
-  },
   channelLogo: {
     maxWidth: '80%',
     maxHeight: '80%',
@@ -384,18 +367,6 @@ const styles = {
     fontWeight: 'bold',
     color: 'white',
     textShadow: '0 1px 3px black',
-  },
-  categoryTitle: {
-    fontSize: '24px',
-    marginBottom: '10px',
-    fontFamily: '"Bubblegum Sans", system-ui, sans-serif',
-    letterSpacing: '1px',
-    textShadow: '0 2px 5px rgba(0,0,0,0.5)',
-    position: 'sticky',
-    top: 0,
-    zIndex: 20,
-    backgroundColor: '#0F101A', // Match app background
-    padding: '5px 0',          // Tightened spacing
   },
   favoriteButton: {
     position: 'absolute',

@@ -1,11 +1,33 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Hls from 'hls.js';
-import { Power } from 'lucide-react';
+import { Power, Maximize, Minimize } from 'lucide-react';
 
 const Player = ({ streamUrl, onBack }) => {
     const videoRef = useRef(null);
+    const wrapperRef = useRef(null);
     const [isBuffering, setIsBuffering] = useState(true);
     const [showControls, setShowControls] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(false);
+
+    const toggleFullscreen = () => {
+        const el = wrapperRef.current;
+        if (!el) return;
+        if (!document.fullscreenElement) {
+            (el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen).call(el);
+        } else {
+            (document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen).call(document);
+        }
+    };
+
+    useEffect(() => {
+        const onFsChange = () => setIsFullscreen(!!document.fullscreenElement);
+        document.addEventListener('fullscreenchange', onFsChange);
+        document.addEventListener('webkitfullscreenchange', onFsChange);
+        return () => {
+            document.removeEventListener('fullscreenchange', onFsChange);
+            document.removeEventListener('webkitfullscreenchange', onFsChange);
+        };
+    }, []);
 
     useEffect(() => {
         let hls;
@@ -90,31 +112,38 @@ const Player = ({ streamUrl, onBack }) => {
 
     return (
         <div
-            style={styles.playerWrapper}
+            ref={wrapperRef}
+            className="player-wrapper"
             onMouseEnter={() => setShowControls(true)}
             onMouseLeave={() => setShowControls(false)}
             onMouseMove={() => setShowControls(true)}
-            onTouchStart={() => setShowControls(true)}
+            onTouchStart={() => setShowControls(prev => !prev)}
         >
             <button
+                className="player-back-btn focusable"
                 style={{
-                    ...styles.backButton,
                     opacity: showControls ? 1 : 0,
                     pointerEvents: showControls ? 'auto' : 'none',
-                    transition: 'opacity 0.5s ease',
-                    background: 'rgba(255, 59, 48, 0.4)',
-                    borderColor: 'var(--neon-magenta)',
-                    width: '25px',
-                    height: '25px',
-                    borderRadius: '7px',
-                    boxShadow: '0 0 15px rgba(255, 59, 48, 0.8)'
                 }}
                 onClick={onBack}
-                className="focusable"
-                autoFocus // Give focus to back button when player opens
+                autoFocus
                 title="Exit Playing Video"
             >
                 <Power size={14} color="white" />
+            </button>
+
+            <button
+                className="player-fs-btn focusable"
+                style={{
+                    opacity: showControls ? 1 : 0,
+                    pointerEvents: showControls ? 'auto' : 'none',
+                }}
+                onClick={toggleFullscreen}
+                title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
+            >
+                {isFullscreen
+                    ? <Minimize size={14} color="white" />
+                    : <Maximize size={14} color="white" />}
             </button>
 
             {isYouTube ? (
