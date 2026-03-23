@@ -327,6 +327,16 @@
    COMPONENT CSS CLASSES (replaces inline style objects)
    =================================================== */
 
+/* Grid wrapper & Continue Watching section */
+.grid-wrapper {
+  padding: 0 20px;
+  padding-bottom: 40px;
+}
+
+.cw-section {
+  padding: 0 20px 16px;
+}
+
 /* Channel grid */
 .channel-grid {
   display: grid;
@@ -621,6 +631,16 @@
   .topbar-icon-btn {
     width: 38px;
     height: 38px;
+  }
+
+  /* Grid & CW padding — smaller on mobile to fit 2 columns */
+  .grid-wrapper {
+    padding: 0 8px;
+    padding-bottom: 24px;
+  }
+
+  .cw-section {
+    padding: 0 8px 12px;
   }
 
   /* Cards */

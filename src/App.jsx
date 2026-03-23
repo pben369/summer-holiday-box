@@ -47,7 +47,7 @@ const ChannelGrid = ({ channels, onSelectChannel, searchQuery, favorites, toggle
   const isTouch = window.matchMedia('(hover: none)').matches;
 
   return (
-    <div style={{ padding: '0 20px', paddingBottom: '40px' }}>
+    <div className="grid-wrapper">
       <h2 className="category-title" style={{ color: categoryColor }}>
         {categoryText}
       </h2>
@@ -111,7 +111,7 @@ const ChannelGrid = ({ channels, onSelectChannel, searchQuery, favorites, toggle
 const ContinueWatching = ({ history, onSelectChannel }) => {
   if (!history.length) return null;
   return (
-    <div style={{ padding: '0 20px 16px' }}>
+    <div className="cw-section">
       <h2 className="category-title" style={{ color: '#00e1ff' }}>▶ Continue Watching</h2>
       <div className="cw-row">
         {history.map((ch) => (
