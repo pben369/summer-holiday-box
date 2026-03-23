@@ -144,6 +144,7 @@ const Player = ({ streamUrl, onBack }) => {
                     pointerEvents: showControls ? 'auto' : 'none',
                 }}
                 onClick={onBack}
+                onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); onBack(); }}
                 autoFocus
                 title="Exit Playing Video"
             >
@@ -157,6 +158,7 @@ const Player = ({ streamUrl, onBack }) => {
                     pointerEvents: showControls ? 'auto' : 'none',
                 }}
                 onClick={toggleFullscreen}
+                onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); toggleFullscreen(); }}
                 title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
             >
                 {isFullscreen
@@ -185,6 +187,7 @@ const Player = ({ streamUrl, onBack }) => {
                     style={styles.video}
                     controls
                     autoPlay
+                    playsInline
                 />
             ) : null}
 
