@@ -26,20 +26,20 @@ const ChannelGrid = ({ channels, onSelectChannel, searchQuery, favorites, toggle
     return matchesSearch && matchesFavorite && matchesType;
   });
 
-  let categoryText = 'All Channels';
+  let categoryText = `All Channels (${filteredChannels.length})`;
   let categoryColor = '#FFCC00';
 
   if (showFavoritesOnly) {
-    categoryText = 'My Favorites';
+    categoryText = `⭐ My Favorites (${filteredChannels.length})`;
     categoryColor = '#FFD700';
   } else if (searchQuery) {
-    categoryText = `Search Results: ${searchQuery}`;
+    categoryText = `Search: "${searchQuery}" (${filteredChannels.length})`;
     categoryColor = 'var(--neon-blue)';
   } else if (contentType === 'live') {
-    categoryText = 'Live Channels';
+    categoryText = `🔴 Live (${filteredChannels.length})`;
     categoryColor = '#FF3B30';
   } else if (contentType === 'series') {
-    categoryText = 'Series';
+    categoryText = `🟢 Series (${filteredChannels.length})`;
     categoryColor = '#34C759';
   }
 
@@ -108,6 +108,32 @@ const ChannelGrid = ({ channels, onSelectChannel, searchQuery, favorites, toggle
   )
 }
 
+const ContinueWatching = ({ history, onSelectChannel }) => {
+  if (!history.length) return null;
+  return (
+    <div style={{ padding: '0 20px 16px' }}>
+      <h2 className="category-title" style={{ color: '#00e1ff' }}>▶ Continue Watching</h2>
+      <div className="cw-row">
+        {history.map((ch) => (
+          <button
+            key={ch.id}
+            className="glow-card focusable cw-card"
+            onClick={() => onSelectChannel(ch)}
+            title={ch.name}
+          >
+            {ch.logo
+              ? <img src={ch.logo} alt={ch.name} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }} loading="lazy" />
+              : <Play size={28} color="white" />}
+            <div className="channel-name-overlay">
+              <span className="channel-name">{ch.name}</span>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 function App() {
   // Use custom hook for TV Remote navigation
   useSpatialNavigation();
@@ -124,6 +150,20 @@ function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [contentType, setContentType] = useState('all'); // 'all', 'live'
   const [hoveredLogo, setHoveredLogo] = useState(null);
+  const [watchHistory, setWatchHistory] = useState(() => {
+    const saved = localStorage.getItem('shb_watch_history');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const handleSelectChannel = (ch) => {
+    setSelectedChannel(ch);
+    setWatchHistory(prev => {
+      const deduped = prev.filter(c => c.id !== ch.id);
+      const updated = [ch, ...deduped].slice(0, 5);
+      localStorage.setItem('shb_watch_history', JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   useEffect(() => {
     localStorage.setItem('praveen_tv_favorites', JSON.stringify(favorites));
@@ -322,20 +362,23 @@ function App() {
             ) : selectedChannel ? (
               <Player streamUrl={selectedChannel.url} onBack={() => setSelectedChannel(null)} />
             ) : (
-              <ChannelGrid
-                channels={channels}
-                searchQuery={searchQuery}
-                favorites={favorites}
-                showFavoritesOnly={showFavoritesOnly}
-                contentType={contentType}
-                onSelectChannel={(ch) => setSelectedChannel(ch)}
-                setHoveredLogo={setHoveredLogo}
-                toggleFavorite={(id) => {
-                  setFavorites(prev =>
-                    prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]
-                  );
-                }}
-              />
+              <>
+                <ContinueWatching history={watchHistory} onSelectChannel={handleSelectChannel} />
+                <ChannelGrid
+                  channels={channels}
+                  searchQuery={searchQuery}
+                  favorites={favorites}
+                  showFavoritesOnly={showFavoritesOnly}
+                  contentType={contentType}
+                  onSelectChannel={handleSelectChannel}
+                  setHoveredLogo={setHoveredLogo}
+                  toggleFavorite={(id) => {
+                    setFavorites(prev =>
+                      prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id]
+                    );
+                  }}
+                />
+              </>
             )}
           </div>
         </div>

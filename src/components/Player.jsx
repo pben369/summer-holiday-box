@@ -5,17 +5,36 @@ import { Power, Maximize, Minimize } from 'lucide-react';
 const Player = ({ streamUrl, onBack }) => {
     const videoRef = useRef(null);
     const wrapperRef = useRef(null);
+    const controlsTimerRef = useRef(null);
     const [isBuffering, setIsBuffering] = useState(true);
     const [showControls, setShowControls] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
 
+    // Show controls then auto-hide after 3s
+    const showControlsTemporarily = () => {
+        setShowControls(true);
+        clearTimeout(controlsTimerRef.current);
+        controlsTimerRef.current = setTimeout(() => setShowControls(false), 3000);
+    };
+
+    // Cleanup timer on unmount
+    useEffect(() => () => clearTimeout(controlsTimerRef.current), []);
+
     const toggleFullscreen = () => {
+        // iOS Safari: only supports fullscreen on <video> elements directly
+        if (!streamUrl?.includes('youtube.com/embed') && videoRef.current?.webkitEnterFullscreen) {
+            videoRef.current.webkitEnterFullscreen();
+            return;
+        }
+        // Standard Fullscreen API (Android, desktop)
         const el = wrapperRef.current;
         if (!el) return;
         if (!document.fullscreenElement) {
-            (el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen).call(el);
+            const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen;
+            if (req) req.call(el);
         } else {
-            (document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen).call(document);
+            const exit = document.exitFullscreen || document.webkitExitFullscreen;
+            if (exit) exit.call(document);
         }
     };
 
@@ -117,7 +136,6 @@ const Player = ({ streamUrl, onBack }) => {
             onMouseEnter={() => setShowControls(true)}
             onMouseLeave={() => setShowControls(false)}
             onMouseMove={() => setShowControls(true)}
-            onTouchStart={() => setShowControls(prev => !prev)}
         >
             <button
                 className="player-back-btn focusable"
@@ -145,6 +163,10 @@ const Player = ({ streamUrl, onBack }) => {
                     ? <Minimize size={14} color="white" />
                     : <Maximize size={14} color="white" />}
             </button>
+
+            {/* Transparent edge strips — capture taps on mobile without blocking the video centre */}
+            <div className="player-edge-zone player-edge-zone--left"  onTouchStart={showControlsTemporarily} />
+            <div className="player-edge-zone player-edge-zone--right" onTouchStart={showControlsTemporarily} />
 
             {isYouTube ? (
                 <iframe

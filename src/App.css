@@ -294,6 +294,35 @@
   }
 }
 
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Continue Watching Row ===== */
+.cw-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.cw-row::-webkit-scrollbar { display: none; }
+
+.cw-card {
+  flex: 0 0 150px;
+  height: 100px;
+  background: #1A1C29;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
 /* ===================================================
    COMPONENT CSS CLASSES (replaces inline style objects)
    =================================================== */
@@ -507,6 +536,24 @@
   backdrop-filter: blur(5px);
   box-shadow: 0 0 15px rgba(0, 225, 255, 0.5);
   transition: opacity 0.5s ease;
+}
+
+/* Transparent touch zones at left/right edges of player (mobile) */
+.player-edge-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 70px;
+  z-index: 102;
+  background: transparent;
+  display: none;
+}
+
+.player-edge-zone--left  { left: 0; }
+.player-edge-zone--right { right: 0; }
+
+@media (max-width: 768px) {
+  .player-edge-zone { display: block; }
 }
 
 /* ===================================================

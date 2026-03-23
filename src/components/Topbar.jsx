@@ -14,7 +14,7 @@ const Topbar = ({ searchQuery, setSearchQuery, showFavoritesOnly, setShowFavorit
                         border: contentType === 'live' ? '2px solid white' : 'none',
                         boxShadow: contentType === 'live' ? '0 0 15px #FF3B30' : 'none'
                     }}
-                    onClick={() => setContentType('live')}
+                    onClick={() => { setContentType('live'); setSearchQuery(''); }}
                     title="Live (Red)"
                 >
                     Live
@@ -26,7 +26,7 @@ const Topbar = ({ searchQuery, setSearchQuery, showFavoritesOnly, setShowFavorit
                         border: contentType === 'series' ? '2px solid white' : 'none',
                         boxShadow: contentType === 'series' ? '0 0 15px #34C759' : 'none'
                     }}
-                    onClick={() => setContentType('series')}
+                    onClick={() => { setContentType('series'); setSearchQuery(''); }}
                     title="Series (Green)"
                 >
                     Series
@@ -39,7 +39,7 @@ const Topbar = ({ searchQuery, setSearchQuery, showFavoritesOnly, setShowFavorit
                         border: contentType === 'all' ? '2px solid white' : 'none',
                         boxShadow: contentType === 'all' ? '0 0 15px #FFCC00' : 'none'
                     }}
-                    onClick={() => setContentType('all')}
+                    onClick={() => { setContentType('all'); setSearchQuery(''); }}
                     title="Show All (Yellow)"
                 >
                     Show All
