@@ -250,7 +250,7 @@ function App() {
           name: 'Malgudi Days',
           logo: 'malgudi-days-logo.png',
           category: 'YouTube Series',
-          url: 'https://www.youtube.com/embed/videoseries?list=PLLV9m6UjApHdi4Vv9uJha-2qEilY_-Sub&autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
+          url: 'https://www.youtube.com/embed/videoseries?list=PL_c7L8RcICKpLCrTT_ZlyBlooup2aHBjT&autoplay=1&controls=1&modestbranding=1&rel=0&fs=0',
         },
         {
           id: 'yt-gravityfalls',
