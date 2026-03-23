@@ -20,26 +20,38 @@ const Player = ({ streamUrl, onBack }) => {
     // Cleanup timer on unmount
     useEffect(() => () => clearTimeout(controlsTimerRef.current), []);
 
-    const toggleFullscreen = () => {
+    const toggleFullscreen = async () => {
         // iOS Safari: only supports fullscreen on <video> elements directly
         if (!streamUrl?.includes('youtube.com/embed') && videoRef.current?.webkitEnterFullscreen) {
             videoRef.current.webkitEnterFullscreen();
-            return;
+            return; // iOS handles orientation itself
         }
         // Standard Fullscreen API (Android, desktop)
         const el = wrapperRef.current;
         if (!el) return;
         if (!document.fullscreenElement) {
             const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen;
-            if (req) req.call(el);
+            if (req) {
+                await req.call(el);
+                // Lock to landscape after entering fullscreen
+                try { await screen.orientation.lock('landscape'); } catch (_) {}
+            }
         } else {
             const exit = document.exitFullscreen || document.webkitExitFullscreen;
-            if (exit) exit.call(document);
+            if (exit) {
+                await exit.call(document);
+                try { screen.orientation.unlock(); } catch (_) {}
+            }
         }
     };
 
     useEffect(() => {
-        const onFsChange = () => setIsFullscreen(!!document.fullscreenElement);
+        const onFsChange = () => {
+            const isFs = !!document.fullscreenElement;
+            setIsFullscreen(isFs);
+            // Unlock orientation whenever fullscreen exits (e.g. via browser back button)
+            if (!isFs) { try { screen.orientation.unlock(); } catch (_) {} }
+        };
         document.addEventListener('fullscreenchange', onFsChange);
         document.addEventListener('webkitfullscreenchange', onFsChange);
         return () => {
